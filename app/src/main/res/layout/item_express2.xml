@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/em_button_login_bg"
+    android:orientation="vertical">
+    <!--android:background="@drawable/shape_group_icon_bg"-->
+    <TextView
+        android:id="@+id/tv_item_context"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/green_8c"
+        android:text="@string/loading"/>
+    <TextView
+        android:id="@+id/tv_item_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/green_8c"
+        android:text="@string/loading"/>
+    <TextView
+        android:id="@+id/tv_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/green_8c"
+        android:text="@string/loading"
+        />
+</LinearLayout>

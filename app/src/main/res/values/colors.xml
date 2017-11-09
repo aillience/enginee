@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="btn_login_normal">#00acff</color>
+    <color name="btn_login_pressed">#46678d</color>
+    <color name="btn_logout_normal">#d33f3f</color>
+    <color name="btn_logout_pressed">#DA5A4D</color>
+    <color name="btn_register_normal">#ffffff</color>
+    <color name="btn_register_pressed">#00acff</color>
+
+    <color name="transparent_background">#00000000</color>
+    <color name="grey_300">#DCDCDC</color>
+    <color name="line">@color/grey_300</color>
+    <color name="info_top_bar_color">#36978c</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green_8c">#36978c</color>
+</resources>

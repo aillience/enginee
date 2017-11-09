@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.yfl.library.alphatabs.AlphaTabsIndicator
+        android:id="@+id/alphaIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+        <com.yfl.library.alphatabs.AlphaTabView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:badgeBackgroundColor="@android:color/holo_blue_dark"
+            app:tabIconNormal="@mipmap/home_normal"
+            app:tabIconSelected="@mipmap/home_selected"
+            app:tabText="Lv显示"
+            app:tabTextSize="13sp"
+            app:textColorNormal="#999999"
+            app:textColorSelected="#46c01b" />
+        <com.yfl.library.alphatabs.AlphaTabView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:badgeBackgroundColor="@android:color/holo_blue_dark"
+            app:tabIconNormal="@mipmap/home_normal"
+            app:tabIconSelected="@mipmap/home_selected"
+            app:tabText="无样式"
+            app:tabTextSize="13sp"
+            app:textColorNormal="#999999"
+            app:textColorSelected="#46c01b" />
+        <com.yfl.library.alphatabs.AlphaTabView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:badgeBackgroundColor="@android:color/holo_blue_dark"
+            app:tabIconNormal="@mipmap/home_normal"
+            app:tabIconSelected="@mipmap/home_selected"
+            app:tabText="多样式"
+            app:tabTextSize="13sp"
+            app:textColorNormal="#999999"
+            app:textColorSelected="#46c01b" />
+    </com.yfl.library.alphatabs.AlphaTabsIndicator>
+
+</LinearLayout>

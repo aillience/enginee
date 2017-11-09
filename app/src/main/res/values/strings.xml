@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Y的DEMO</string>
+    <string name="login">登录</string>
+    <string name="refresh">Refresh</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+    <string name="register">注册</string>
+    <string name="loading">加载中……</string>
+    <string name="search">查詢</string>
+    <string name="writeNumber">输入单号</string>
+    <string name="joke">笑话</string>
+</resources>
