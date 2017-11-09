@@ -90,7 +90,6 @@ public class LoginActivity extends BaseActivity implements ILoginView, RequestCa
                 map.put("method", "Disembark");
                 map.put("userName", getUserName());
                 map.put("pwd", getPwd());
-//                if(loginPresenter!=null)
                 loginPresenter.Login(this, map);
                 break;
         }
