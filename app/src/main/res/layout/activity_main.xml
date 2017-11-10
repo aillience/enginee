@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -17,7 +17,7 @@
             android:id="@+id/Btn_Search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/search"/>
         <Button
             android:id="@+id/Btn_Login"
@@ -33,5 +33,19 @@
             android:layout_below="@+id/Btn_Login"
             android:layout_centerHorizontal="true"
             android:text="@string/joke"/>
+        <Button
+            android:id="@+id/Btn_startService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Btn_Joke"
+            android:layout_centerHorizontal="true"
+            android:text="@string/startService"/>
+        <Button
+            android:id="@+id/Btn_stopService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Btn_startService"
+            android:layout_centerHorizontal="true"
+            android:text="@string/stopService"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

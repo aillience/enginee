@@ -9,4 +9,6 @@
     <string name="search">查詢</string>
     <string name="writeNumber">输入单号</string>
     <string name="joke">笑话</string>
+    <string name="startService">开启服务</string>
+    <string name="stopService">结束服务</string>
 </resources>
