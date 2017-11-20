@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  * explain: activity基类
  */
 
-@SuppressWarnings({"JavaDoc","unused"})
+@SuppressWarnings({"JavaDoc", "unused", "deprecation"})
 public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatActivity implements IBaseView{
     protected ActivityComponent mActivityComponent;
     protected T mIPresenter;
@@ -81,6 +81,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
         }
         MyApp.getActManager().addOneActivity(this);
         mActivity=this;
+//        getApplication();
         mContext=getApplicationContext();
         initActivityComponent();
         injectAction();

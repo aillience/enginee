@@ -182,7 +182,7 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
 
     @Override
     public void onError(String errorMsg) {
-
+        mToast.show(errorMsg);
     }
     private void refreshAdapter(){
         if(fragmentExpressList!=null){

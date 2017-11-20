@@ -114,6 +114,7 @@ public class RetrofitManager {
     };
 
     private final Interceptor mLoggingInterceptor = new Interceptor() {
+        @SuppressWarnings("ConstantConditions")
         @Override
         public Response intercept(@NonNull Chain chain) throws IOException {
             Request request = chain.request();
@@ -123,6 +124,7 @@ public class RetrofitManager {
             long t2 = System.nanoTime();
             MLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s",
                     response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+//            MLog.i(String.format(Locale.getDefault(),"response is next:%n %s",response.headers().get("Warning")));
             return response;
         }
     };
