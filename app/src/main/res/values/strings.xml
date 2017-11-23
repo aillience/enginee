@@ -11,4 +11,7 @@
     <string name="joke">笑话</string>
     <string name="startService">开启服务</string>
     <string name="stopService">结束服务</string>
+    <string name="check_to_pass">接受本协议</string>
+    <string name="error_message">请先同意本条款</string>
+    <string name="lorem_ipsum">自定义页面\n同意说明书\n就是本产品的一系列使用说明条款</string>
 </resources>

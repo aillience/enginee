@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aillience.enginee">
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -8,6 +9,11 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.REAL_GET_TASKS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:name="com.aillience.enginee.app.MyApp"
         android:allowBackup="true"
@@ -18,13 +24,18 @@
         android:theme="@style/AppTheme">
 
         <service android:name=".service.LivenHeartService"/>
-
-        <activity android:name="com.aillience.enginee.ui.activity.MainActivity"
-            android:launchMode="singleTask">
+        <activity android:name=".ui.activity.splash.SplashActivity"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.splash.IntroActivity"
+            android:theme="@style/Theme.Intro" />
+        <activity android:name="com.aillience.enginee.ui.activity.MainActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name="com.aillience.enginee.ui.activity.LoginActivity"/>
         <activity android:name="com.aillience.enginee.ui.activity.ExpressActivity"/>

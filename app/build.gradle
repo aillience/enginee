@@ -51,6 +51,10 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     apt 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.android.support:recyclerview-v7:23.0.+'
+
     //自定义库
     compile project(':yfllibrary')
+    //一个十分好用的引导页库 貌似地址不行了
+//    compile 'agency.tango.android:material-intro-screen:{latest_release}'
+    compile project(':material-intro-screen')
 }
