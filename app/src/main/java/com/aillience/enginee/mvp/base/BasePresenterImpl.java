@@ -3,6 +3,7 @@ package com.aillience.enginee.mvp.base;
 import android.support.annotation.NonNull;
 
 import com.aillience.enginee.listener.RequestCallBack;
+import com.aillience.enginee.util.MLog;
 
 /**
  * Happy every day.
@@ -44,6 +45,12 @@ public class BasePresenterImpl<T extends IBaseView,E> implements IBasePresenter,
     public void onError(String errorMsg) {
         mView.hideProgress();
         mView.showMsg(errorMsg);
+    }
+    protected boolean before(){//默认通过
+        return true;
+    }
+    protected void after(Object o){
+        MLog.i(o.toString());
     }
 
 

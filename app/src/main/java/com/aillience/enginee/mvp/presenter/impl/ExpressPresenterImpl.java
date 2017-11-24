@@ -9,6 +9,7 @@ import com.aillience.enginee.net.NetWorkUrl;
 import com.aillience.enginee.net.NetWorkUtil;
 import com.aillience.enginee.net.RetrofitManager;
 import com.aillience.enginee.util.MLog;
+import com.aillience.enginee.util.NetUtil;
 import com.aillience.enginee.util.TransformUtils;
 
 import java.util.Map;
@@ -30,9 +31,22 @@ public class ExpressPresenterImpl extends BasePresenterImpl<IExpressView,Express
     ExpressPresenterImpl(){
 
     }
+
+    @Override
+    protected boolean before() {
+        //判断是否通过
+        return super.before();
+    }
+
+    @Override
+    protected void after(Object o) {
+        super.after(o);
+    }
+
     @Override
     public void SearchExpress(final RequestCallBack<ExpressBean> callBack, Map<String, String> queryMap) {
-        new RetrofitManager(NetWorkUrl.URL_Express).getExpress(queryMap)
+        if(before()){
+            new RetrofitManager(NetWorkUrl.URL_Express).getExpress(queryMap)
                 .compose(TransformUtils.<ExpressBean>defaultSchedulers())
                 .subscribe(new Observer<ExpressBean>() {
                     @Override
@@ -58,5 +72,9 @@ public class ExpressPresenterImpl extends BasePresenterImpl<IExpressView,Express
 
                     }
                 });
+
+        }else {
+            after("网络已断开……");
+        }
     }
 }

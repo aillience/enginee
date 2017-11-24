@@ -9,6 +9,7 @@ import com.aillience.enginee.net.NetWorkUrl;
 import com.aillience.enginee.net.NetWorkUtil;
 import com.aillience.enginee.net.RetrofitManager;
 import com.aillience.enginee.util.MLog;
+import com.aillience.enginee.util.NetUtil;
 import com.aillience.enginee.util.TransformUtils;
 
 import java.util.Map;
@@ -33,32 +34,41 @@ public class LoginPresenterImpl extends BasePresenterImpl<ILoginView,UserBean> i
     }
 
     @Override
+    protected boolean before() {
+        return NetUtil.isNetworkAvailable();
+    }
+
+    @Override
     public void Login(final RequestCallBack<UserBean> callBack, Map<String, String> map) {
-        new RetrofitManager(NetWorkUrl.URL_PT).getLogin(map)
-                .compose(TransformUtils.<UserBean>defaultSchedulers())
-                .subscribe(new Observer<UserBean>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        MLog.d("开始请求");
-                        callBack.beforeRequest();
-                    }
+        if(before()){
+            new RetrofitManager(NetWorkUrl.URL_PT).getLogin(map)
+                    .compose(TransformUtils.<UserBean>defaultSchedulers())
+                    .subscribe(new Observer<UserBean>() {
+                        @Override
+                        public void onSubscribe(@NonNull Disposable d) {
+                            MLog.d("开始请求");
+                            callBack.beforeRequest();
+                        }
 
-                    @Override
-                    public void onNext(@NonNull UserBean bean) {
-                        MLog.d("返回接口成功");
-                        callBack.success(bean);
-                    }
+                        @Override
+                        public void onNext(@NonNull UserBean bean) {
+                            MLog.d("返回接口成功");
+                            callBack.success(bean);
+                        }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        MLog.e("返回接口失败");
-                        callBack.onError(NetWorkUtil.analyzeNetworkError(e));
-                    }
+                        @Override
+                        public void onError(@NonNull Throwable e) {
+                            MLog.e("返回接口失败");
+                            callBack.onError(NetWorkUtil.analyzeNetworkError(e));
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onComplete() {
 
-                    }
-                });
+                        }
+                    });
+        }else {
+            after("网络已断开……");
+        }
     }
 }
