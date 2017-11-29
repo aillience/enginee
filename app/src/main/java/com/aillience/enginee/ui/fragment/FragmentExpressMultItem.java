@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 
+import com.aillience.enginee.util.BasicParameters;
+import com.aillience.enginee.util.MyLog;
 import com.yfl.library.base.adapter.BaseRecyclerAdapter;
 import com.yfl.library.support.MultiItemTypeSupport;
 import com.yfl.library.recycler.MyRecyclerView;
@@ -11,7 +13,6 @@ import com.aillience.enginee.R;
 import com.aillience.enginee.mvp.model.entity.ExpressEntity;
 import com.aillience.enginee.ui.adapter.recycle.ExpressAdapter2;
 import com.aillience.enginee.ui.base.BaseFragment;
-import com.aillience.enginee.util.MLog;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import butterknife.BindView;
  * Happy every day.
  * Created by yfl on 2017/9/20 0020
  * explain: 普通recycle多类型显示
+ * @author yfl
  */
 @SuppressLint("StaticFieldLeak")
 public class FragmentExpressMultItem extends BaseFragment {
@@ -45,8 +47,9 @@ public class FragmentExpressMultItem extends BaseFragment {
 
     @Override
     public void injectAction() {
-        if (fragmentComponent != null)
+        if (fragmentComponent != null){
             fragmentComponent.inject(this);
+        }
     }
 
     @Override
@@ -71,7 +74,7 @@ public class FragmentExpressMultItem extends BaseFragment {
 
             @Override
             public int getViewType(int position, ExpressEntity expressEntity) {
-                if (position%2==0) {
+                if (position% BasicParameters.INT_two==0) {
                     return 0;
                 } else {
                     return 1;
@@ -102,7 +105,7 @@ public class FragmentExpressMultItem extends BaseFragment {
         expressAdapter.setViewClick(new BaseRecyclerAdapter.viewClick() {
             @Override
             public void onItemClick(View view, Object item, int position) {
-                MLog.i("Click position="+position);
+                MyLog.i("Click position="+position);
                 rvExpress.scrollToPosition(position);
             }
 
@@ -112,7 +115,7 @@ public class FragmentExpressMultItem extends BaseFragment {
             }
         });
         rvExpress.setLayoutManager(false,true,3);
-//        rvExpress.addItemDecoration();
+///       rvExpress.addItemDecoration();
         rvExpress.setAdapter(expressAdapter);
     }
     public void notifyDataSetChanged(){

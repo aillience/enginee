@@ -131,7 +131,9 @@ public class MyDbHelper extends SQLiteOpenHelper{
                     _db = this.getWritableDatabase();
                 }
 
-                if (_db == null) return false;
+                if (_db == null){
+                    return false;
+                }
                 _db.execSQL(sql);
                 //_db.close();
                 return true;
@@ -159,7 +161,9 @@ public class MyDbHelper extends SQLiteOpenHelper{
                     _db = this.getWritableDatabase();
                 }
 
-                if (_db == null) return false;
+                if (_db == null) {
+                    return false;
+                }
                 _db.execSQL(sql, bindArgs);
                 //_db.close();
                 return true;
@@ -186,7 +190,9 @@ public class MyDbHelper extends SQLiteOpenHelper{
                 }
             }
             Cursor cursor;
-            if (_db == null) return null;
+            if (_db == null) {
+                return null;
+            }
             cursor = _db.rawQuery(sql, null);
             return cursor;
         }catch(Exception e){
@@ -197,7 +203,7 @@ public class MyDbHelper extends SQLiteOpenHelper{
     /**
      * 批量插入多条数据,例子，具体需要看情况
      */
-    private boolean InsertManyData(String tableName,ArrayList<String> dList){
+    private boolean insertManyData(String tableName,ArrayList<String> dList){
         String sql = "INSERT INTO "+tableName+" (id, name) VALUES (?, ?)";
         try{
             initDb();

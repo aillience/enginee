@@ -8,8 +8,7 @@ import com.aillience.enginee.mvp.view.IExpressView;
 import com.aillience.enginee.net.NetWorkUrl;
 import com.aillience.enginee.net.NetWorkUtil;
 import com.aillience.enginee.net.RetrofitManager;
-import com.aillience.enginee.util.MLog;
-import com.aillience.enginee.util.NetUtil;
+import com.aillience.enginee.util.MyLog;
 import com.aillience.enginee.util.TransformUtils;
 
 import java.util.Map;
@@ -24,6 +23,7 @@ import io.reactivex.disposables.Disposable;
  * Happy every day.
  * Created by yfl on 2017/9/13 0013
  * explain: 快递查询接口实现
+ * @author yfl
  */
 
 public class ExpressPresenterImpl extends BasePresenterImpl<IExpressView,ExpressBean> implements IExpressPresenter{
@@ -44,26 +44,26 @@ public class ExpressPresenterImpl extends BasePresenterImpl<IExpressView,Express
     }
 
     @Override
-    public void SearchExpress(final RequestCallBack<ExpressBean> callBack, Map<String, String> queryMap) {
+    public void searchExpress(final RequestCallBack<ExpressBean> callBack, Map<String, String> queryMap) {
         if(before()){
-            new RetrofitManager(NetWorkUrl.URL_Express).getExpress(queryMap)
+            new RetrofitManager(NetWorkUrl.URL_EXPRESS).getExpress(queryMap)
                 .compose(TransformUtils.<ExpressBean>defaultSchedulers())
                 .subscribe(new Observer<ExpressBean>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        MLog.d("开始请求");
+                        MyLog.d("开始请求");
                         callBack.beforeRequest();
                     }
 
                     @Override
                     public void onNext(@NonNull ExpressBean bean) {
-                        MLog.d("返回接口成功");
+                        MyLog.d("返回接口成功");
                         callBack.success(bean);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        MLog.e("返回接口失败");
+                        MyLog.e("返回接口失败");
                         callBack.onError(NetWorkUtil.analyzeNetworkError(e));
                     }
 

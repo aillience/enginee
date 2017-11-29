@@ -8,7 +8,7 @@ import com.aillience.enginee.mvp.model.bean.ExpressBean;
 import com.aillience.enginee.mvp.model.bean.JokeBean;
 import com.aillience.enginee.mvp.model.bean.UserBean;
 import com.aillience.enginee.mvp.model.entity.JokeEntity;
-import com.aillience.enginee.util.MLog;
+import com.aillience.enginee.util.MyLog;
 import com.aillience.enginee.util.NetUtil;
 
 import java.io.File;
@@ -32,10 +32,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Happy every day.
  * Created by yfl on 2017/9/6 0006
  * explain: Retrofit管理器 这里是借鉴一位前辈的经验做出的改装。
+ * @author yfl
  */
 @SuppressWarnings("unused")
 public class RetrofitManager {
-    private ApiService apiService;//接口服务对象
+    /**
+     * 接口服务对象
+     */
+    private ApiService apiService;
     /**
      * 设缓存有效期为两天
      */
@@ -54,8 +58,8 @@ public class RetrofitManager {
     private static final String CACHE_CONTROL_AGE = "max-age=0";
     private static volatile OkHttpClient sOkHttpClient;
 
-    public RetrofitManager(String BaseUrl){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseUrl)
+    public RetrofitManager(String baseUrl){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
                 .client(getOkHttpClient()).addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
         apiService=retrofit.create(ApiService.class);
@@ -94,7 +98,7 @@ public class RetrofitManager {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .build();
-                MLog.d("no network");
+                MyLog.d("no network");
             }
             Response originalResponse = chain.proceed(request);
             if (NetUtil.isNetworkAvailable()) {
@@ -119,12 +123,12 @@ public class RetrofitManager {
         public Response intercept(@NonNull Chain chain) throws IOException {
             Request request = chain.request();
             long t1 = System.nanoTime();
-            MLog.i(String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+            MyLog.i(String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
             Response response = chain.proceed(request);
             long t2 = System.nanoTime();
-            MLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s",
+            MyLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s",
                     response.request().url(), (t2 - t1) / 1e6d, response.headers()));
-//            MLog.i(String.format(Locale.getDefault(),"response is next:%n %s",response.headers().get("Warning")));
+///            MyLog.i(String.format(Locale.getDefault(),"response is next:%n %s",response.headers().get("Warning")));
             return response;
         }
     };
@@ -135,15 +139,29 @@ public class RetrofitManager {
     private String getCacheControl() {
         return NetUtil.isNetworkAvailable() ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
     }
-    //登录接口
+
+    /**
+     * 登录接口
+     * @param stringMap 条件
+     * @return UserBean对象
+     */
     public Observable<UserBean> getLogin(Map<String,String> stringMap){
         return apiService.Login(getCacheControl(),stringMap);
     }
-    //快递查询接口
+
+    /**
+     * 快递查询接口
+     * @param stringMap 条件
+     * @return ExpressBean对象
+     */
     public Observable<ExpressBean> getExpress(Map<String,String> stringMap){
         return apiService.Express(getCacheControl(),stringMap);
     }
-    //笑话接口
+
+    /**
+     * 笑话接口
+     * @return JokeBean对象
+     */
     public Observable<JokeBean> getJoke(){
         return apiService.GetJokeBean(getCacheControl());
     }

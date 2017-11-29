@@ -27,6 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:text="@string/defaultNumber"
             android:inputType="text"
             android:background="@drawable/shape_group_icon_bg"/>
         <Spinner

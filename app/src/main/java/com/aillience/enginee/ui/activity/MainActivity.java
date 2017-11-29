@@ -16,7 +16,8 @@ import com.aillience.enginee.net.NetWorkUtil;
 import com.aillience.enginee.net.RetrofitManager;
 import com.aillience.enginee.service.LivenHeartService;
 import com.aillience.enginee.ui.base.BaseActivity;
-import com.aillience.enginee.util.MLog;
+import com.aillience.enginee.util.BasicParameters;
+import com.aillience.enginee.util.MyLog;
 import com.aillience.enginee.util.TransformUtils;
 
 import java.util.List;
@@ -25,6 +26,10 @@ import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * 主页
+ * @author yfl
+ */
 public class MainActivity extends BaseActivity {
     private long time = 0;
     private Intent serviceIntent=null;
@@ -64,13 +69,16 @@ public class MainActivity extends BaseActivity {
                 mToast.show("Handler消息来了");
                 break;
             case 2:
-                if(serviceIntent!=null)
-                startService(serviceIntent);
+                if(serviceIntent!=null){
+                    startService(serviceIntent);
+                }
                 break;
             case 3:
-                if(serviceIntent!=null)
+                if(serviceIntent!=null){
                     stopService(serviceIntent);
+                }
                 break;
+            default:break;
         }
         return true;
     }
@@ -78,8 +86,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if ((System.currentTimeMillis() - time > 1000)) {
-                mToast.show("再按一次退出程序", 1000);
+            if ((System.currentTimeMillis() - time > BasicParameters.LONG_thousand)) {
+                mToast.show("再按一次退出程序", BasicParameters.LONG_thousand);
                 time = System.currentTimeMillis();
             } else {
                 MyApp.getActManager().exitApp();
@@ -100,8 +108,9 @@ public class MainActivity extends BaseActivity {
                 startActivityByName(LoginActivity.class.getCanonicalName(), false);
                 break;
             case R.id.Btn_Joke:
-                if (fastClick())
+                if (fastClick()) {
                     getJoke();
+                }
                 break;
             case R.id.Btn_startService:
                 mHandler.sendEmptyMessage(2);
@@ -109,13 +118,15 @@ public class MainActivity extends BaseActivity {
             case R.id.Btn_stopService:
                 mHandler.sendEmptyMessage(3);
                 break;
+            default:break;
         }
-        if (intent != null)
+        if (intent != null){
             startActivity(intent);
+        }
     }
 
     private void getJoke() {
-        new RetrofitManager(NetWorkUrl.URL_Joke).getJokeList()
+        new RetrofitManager(NetWorkUrl.URL_JOKE).getJokeList()
                 .compose(TransformUtils.<List<JokeEntity>>defaultSchedulers())
                 .subscribe(new Observer<List<JokeEntity>>() {
                     @Override
@@ -125,13 +136,13 @@ public class MainActivity extends BaseActivity {
 
                     @Override
                     public void onNext(@NonNull List<JokeEntity> jokeBean) {
-                        MLog.d("返回接口成功");
+                        MyLog.d("返回接口成功");
                         requestCallBack.success(jokeBean);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        MLog.e("返回接口失败");
+                        MyLog.e("返回接口失败");
                         requestCallBack.onError(NetWorkUtil.analyzeNetworkError(e));
                     }
 
@@ -152,8 +163,8 @@ public class MainActivity extends BaseActivity {
         @Override
         public void success(List<JokeEntity> data) {
             mHandler.sendEmptyMessage(1);
-            MLog.i("笑话获取成功");
-            MLog.i("笑话：" + data.get(0).getContent());
+            MyLog.i("笑话获取成功");
+            MyLog.i("笑话：" + data.get(0).getContent());
         }
 
         @Override

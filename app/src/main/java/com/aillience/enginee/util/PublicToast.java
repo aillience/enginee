@@ -9,12 +9,10 @@ import android.os.Looper;
 import android.view.Gravity;
 import android.widget.Toast;
 
-/*
- * @author YFL
+/**
+ * @author yfl
  * 因为功能需要，根据网上资料整理加工，定义一个可控制显示时间的Toast
  */
-
-/**调用Toast*/
 @SuppressWarnings({"JavaDoc","unused"})
 @SuppressLint({"ShowToast"})
 public class PublicToast {
@@ -72,7 +70,7 @@ public class PublicToast {
 		if (mCanceled) {
 			mToast.setDuration(Toast.LENGTH_LONG);
 			mToast.setGravity(Gravity.CENTER, 0, -1);
-//			mToast.getView().setBackgroundColor(Color.TRANSPARENT);
+///			mToast.getView().setBackgroundColor(Color.TRANSPARENT);
 			mCanceled = false;
 			showUntilCancel();
 		}
@@ -92,10 +90,12 @@ public class PublicToast {
 	}
 
 	private void showUntilCancel() {
-		if (mCanceled)
+		if (mCanceled){
 			return;
+		}
 		mToast.show();
 		mHandler.postDelayed(new Runnable() {
+			@Override
 			public void run() {
 				showUntilCancel();
 			}
@@ -129,6 +129,7 @@ public class PublicToast {
 	private void ShowAnyTime(String text, long t) {
 		showMax(text);
 		mHandler.postDelayed(new Runnable() {
+			@Override
 			public void run() {
 				hide();
 			}

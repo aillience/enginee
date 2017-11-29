@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 
 import android.view.View;
 
+import com.aillience.enginee.util.MyLog;
 import com.yfl.library.base.adapter.BaseRecyclerAdapter;
 import com.yfl.library.recycler.MyRecyclerView;
 import com.aillience.enginee.R;
 import com.aillience.enginee.mvp.model.entity.ExpressEntity;
 import com.aillience.enginee.ui.adapter.recycle.ExpressAdapter;
 import com.aillience.enginee.ui.base.BaseFragment;
-import com.aillience.enginee.util.MLog;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class FragmentExpressRecycle extends BaseFragment {
         expressAdapter.setViewClick(new BaseRecyclerAdapter.viewClick() {
             @Override
             public void onItemClick(View view, Object item, int position) {
-                MLog.i("Click position="+position);
+                MyLog.i("Click position="+position);
                 rvExpress.scrollToPosition(position);
             }
 

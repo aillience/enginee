@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.aillience.enginee.util.BasicParameters;
+import com.aillience.enginee.util.MyLog;
 import com.yfl.library.alphatabs.AlphaTabsIndicator;
 import com.yfl.library.widget.ClearEditText;
 import com.aillience.enginee.R;
@@ -21,7 +23,6 @@ import com.aillience.enginee.ui.base.BaseActivity;
 import com.aillience.enginee.ui.fragment.FragmentExpressList;
 import com.aillience.enginee.ui.fragment.FragmentExpressMultItem;
 import com.aillience.enginee.ui.fragment.FragmentExpressRecycle;
-import com.aillience.enginee.util.MLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +38,14 @@ import butterknife.OnClick;
  * Happy every day.
  * Created by yfl on 2017/9/13 0013
  * explain: 快递查询
+ * @author yfl
  */
 
 public class ExpressActivity extends BaseActivity implements IExpressView, RequestCallBack<ExpressBean> {
     @BindView(R.id.cdt_express_number)
     ClearEditText cdtExpressNumber;
     @BindView(R.id.Sp_express_type)
-    Spinner SpExpressType;
+    Spinner spExpressType;
     @BindView(R.id.btn_express_search)
     Button btnExpressSearch;
     @BindView(R.id.vp_express)
@@ -75,11 +77,11 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
     }
 
     private void initSpinner() {
-//        String[] types = this.getResources().getStringArray(R.array.expressTypeName);
-        SpExpressType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+///        String[] types = this.getResources().getStringArray(R.array.expressTypeName);
+        spExpressType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mToast.show(position + "当前位置为:" + SpExpressType.getSelectedItem().toString());
+                mToast.show(position + "当前位置为:" + spExpressType.getSelectedItem().toString());
             }
 
             @Override
@@ -108,11 +110,11 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
 
             @Override
             public void onPageSelected(int position) {
-                if (0 == position) {
+                if (BasicParameters.INT_default == position) {
                     alphaIndicator.getTabView(0).showNumber(alphaIndicator.getTabView(0).getBadgeNumber() - 1);
-                } else if (1 == position) {
+                } else if (BasicParameters.INT_one == position) {
                     alphaIndicator.getCurrentItemView().removeShow();
-                } else if (2 == position) {
+                } else if (position == BasicParameters.INT_two) {
                     alphaIndicator.removeAllBadge();
                 }
             }
@@ -120,7 +122,6 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
         vpExpress.setAdapter(expressFragmentAdapter);
         vpExpress.addOnPageChangeListener(expressFragmentAdapter);
     }
-
     private void initAlphaIndicator() {
         initViewPager();
         alphaIndicator.setViewPager(vpExpress);
@@ -135,7 +136,7 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
         if (mActivityComponent != null) {
             mActivityComponent.inject(this);
             String nn = mActivityComponent.getActivity().getLocalClassName();
-            MLog.d("包名" + nn);
+            MyLog.d("包名" + nn);
         }
     }
 
@@ -145,37 +146,36 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
             case 1:
                 refreshAdapter();
                 break;
+            default:break;
         }
         return true;
     }
 
     @Override
     public String getExpressNumber() {
-//        return cdtExpressNumber.getText().toString().trim();
-        return "450920803566";
+        return cdtExpressNumber.getText().toString().trim();
     }
 
     @OnClick(R.id.btn_express_search)
     public void onViewClicked() {
-//        mToast.show("点击查询");
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(2);
         map.put("type", "zhongtong");
         map.put("postid", getExpressNumber());
-        expressPresenterImpl.SearchExpress(this, map);
+        expressPresenterImpl.searchExpress(this, map);
     }
 
     @Override
     public void beforeRequest() {
-        MLog.i("开始请求啦");
+        MyLog.i("开始请求啦");
     }
 
     @Override
     public void success(ExpressBean data) {
-        MLog.i("接口返回Message：" + data.getMessage());
+        MyLog.i("接口返回Message：" + data.getMessage());
         if (data.getData().size() > 0) {
             mToast.show("已成功获取信息");
             expressBean.setData(data.getData());
-            MLog.i("刷新list：" + data.getData().size());
+            MyLog.i("刷新list：" + data.getData().size());
             mHandler.sendEmptyMessage(1);
         }
     }

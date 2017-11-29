@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.novoda:bintray-release:0.3.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -16,6 +17,14 @@ allprojects {
     repositories {
         jcenter()
     }
+    tasks.withType(Javadoc) {
+        options.memberLevel = JavadocMemberLevel.PROTECTED
+        options.links("http://docs.oracle.com/javase/7/docs/api/")
+        options.links("http://developer.android.com/reference/")
+        options.tags = ['sample']
+        exclude '**/BuildConfig.java'
+        exclude '**/R.java'
+    }
 }
 
 task clean(type: Delete) {
@@ -23,7 +32,7 @@ task clean(type: Delete) {
 }
 tasks.whenTaskAdded { task ->
     if (task.name.contains("lint")
-            || task.name.equals("clean")
+            || task.name.contains("clean")
             || task.name.contains("Aidl")
             || task.name.contains("mockableAndroidJar")
             || task.name.contains("UnitTest")

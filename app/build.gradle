@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 android {
-    compileSdkVersion 25
+    compileSdkVersion 24
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.aillience.enginee"
@@ -29,6 +29,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -51,10 +52,9 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     apt 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.android.support:recyclerview-v7:23.0.+'
-
     //自定义库
     compile project(':yfllibrary')
     //一个十分好用的引导页库 貌似地址不行了
-//    compile 'agency.tango.android:material-intro-screen:{latest_release}'
+    //    compile 'agency.tango.android:material-intro-screen:{latest_release}'
     compile project(':material-intro-screen')
 }

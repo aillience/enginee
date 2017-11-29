@@ -3,7 +3,7 @@ package com.aillience.enginee.mvp.base;
 import android.support.annotation.NonNull;
 
 import com.aillience.enginee.listener.RequestCallBack;
-import com.aillience.enginee.util.MLog;
+import com.aillience.enginee.util.MyLog;
 
 /**
  * Happy every day.
@@ -50,7 +50,7 @@ public class BasePresenterImpl<T extends IBaseView,E> implements IBasePresenter,
         return true;
     }
     protected void after(Object o){
-        MLog.i(o.toString());
+        MyLog.i(o.toString());
     }
 
 
