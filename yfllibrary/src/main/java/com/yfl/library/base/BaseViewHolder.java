@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.yfl.library.R;
+import com.yfl.library.util.images.MySimpleTarget;
 
 
 /**
@@ -117,28 +120,46 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
      * @param url
      */
     public void setImageByUrlIcon(int viewId, String url) {
-        Glide.with(getContext()).load(url)//
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)//缓存修改过的图片
-                .override(120, 120)
-                .crossFade() //设置淡入淡出效果，默认300ms，可以传参
-                .placeholder(R.drawable.img_error)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)//缓存修改过的图片
-                .error(R.drawable.img_error)
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.img_error)	//加载成功之前占位图 icon_default_load_place
+                .skipMemoryCache(false)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .signature(new ObjectKey(url))
+                .fallback(R.drawable.img_error)
+                .error(R.drawable.img_error);	//加载错误之后的错误图
+        Glide.with(getContext()).load(url).apply(options)
                 .into((ImageView) getView(viewId));
     }
     /**
-     * 为ImageView设置图片
+     * 为ImageView设置图片,设置标签的那种，防止列表复用时，图片错位
      *
      * @param viewId
      * @param url
      */
     public void setImageByUrl(int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        //图片错误问题
+        imageView.setTag(R.id.image_url,(url == null) ?"":url);
+        Object tag = imageView.getTag(R.id.image_url);
+        if(tag == null || "".equals(tag)){
+            imageView.setImageResource(R.drawable.img_error);
+            return;
+        }
+        if(url != tag){
+            //如果tag不相等，代表view对象不同，不加载
+            return;
+        }
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.img_error)	//加载成功之前占位图 icon_default_load_place
+                .skipMemoryCache(false)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .signature(new ObjectKey(url))
+                .fallback(R.drawable.img_error)
+                .error(R.drawable.img_error);	//加载错误之后的错误图
         Glide.with(getContext()).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)//缓存修改过的图片
-                .override(250, 250)
-                .crossFade() //设置淡入淡出效果，默认300ms，可以传参
-                .placeholder(R.drawable.img_error_big)
-                .error(R.drawable.img_error_big)
-                .into((ImageView) getView(viewId));
+                .apply(options)
+                .into(new MySimpleTarget(tag,imageView));
     }
 }
