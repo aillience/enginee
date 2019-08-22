@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.aillience.enginee.util.MyLog;
 import com.yfl.library.base.adapter.BaseRecyclerAdapter;
+import com.yfl.library.recycler.GridItemDecoration;
 import com.yfl.library.recycler.MyRecyclerView;
 import com.aillience.enginee.R;
 import com.aillience.enginee.mvp.model.entity.ExpressEntity;
@@ -77,8 +78,13 @@ public class FragmentExpressRecycle extends BaseFragment {
 
             }
         });
-//        rvExpress.setLayoutManager(false,true,2);
-//        rvExpress.addItemDecoration();
+        rvExpress.setLayoutManager(true,true,2);
+        rvExpress.addItemDecoration(new GridItemDecoration.Builder(getContext())
+                .setHorizontalSpan(R.dimen.x2)
+                .setVerticalSpan(R.dimen.x2)
+                .setColorResource(R.color.colorPrimary)
+                .setShowLastLine(false)
+                .build());
         rvExpress.setAdapter(expressAdapter);
     }
     public void notifyDataSetChanged(){
