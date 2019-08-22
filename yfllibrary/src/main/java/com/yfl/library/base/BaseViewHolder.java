@@ -150,6 +150,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
             //如果tag不相等，代表view对象不同，不加载
             return;
         }
+
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.img_error)	//加载成功之前占位图 icon_default_load_place
                 .skipMemoryCache(false)
