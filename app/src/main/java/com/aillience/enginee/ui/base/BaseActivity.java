@@ -12,6 +12,8 @@ import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -23,6 +25,7 @@ import com.aillience.enginee.dagger.module.ActivityModule;
 import com.aillience.enginee.mvp.base.IBasePresenter;
 import com.aillience.enginee.mvp.base.IBaseView;
 import com.aillience.enginee.util.PublicToast;
+import com.yfl.library.base.BaseViewHolder;
 
 
 import butterknife.ButterKnife;
@@ -42,6 +45,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
     protected Activity mActivity;
     protected Context mContext;
     private long lastClick = 0;//最后点击计时
+    protected BaseViewHolder baseViewHolder;
     /**
      * 获取布局ID
      *
@@ -136,6 +140,18 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
     @Override
     public void showMsg(String message) {
     }
+
+    @Override
+    public BaseViewHolder bindOwnView() {
+        if(baseViewHolder == null){
+            //需要时才初始化
+            ViewGroup v = findViewById(android.R.id.content);
+            //我们自己的布局文件
+            baseViewHolder = new BaseViewHolder(v.getChildAt(0));
+        }
+        return baseViewHolder;
+    }
+
     //防止快速点击
     protected boolean fastClick() {
         if (System.currentTimeMillis() - lastClick <= 1000) {

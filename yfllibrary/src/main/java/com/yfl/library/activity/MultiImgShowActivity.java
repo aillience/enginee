@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * 用法：
+ *      //相册
  *     Intent intent = new Intent(mContext, MultiImgShowActivity.class);
  *     ArrayList<String> arrayList = new ArrayList<>(stringArrayList);
  *     intent.putStringArrayListExtra("photos", arrayList);
@@ -40,6 +41,7 @@ import java.util.Map;
  *     ac.startActivity(intent);
  *     ac.overridePendingTransition(R.anim.zoom_in, 0);
  *
+ *     //网络图片
  *    Intent intent = new Intent(getActivity(), MultiImgShowActivity.class);
  *    ArrayList<String> arrayList = new ArrayList<>(imgUrls);
  *    intent.putStringArrayListExtra("photos", arrayList);
