@@ -2,6 +2,7 @@ package com.yfl.library.base;
 
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
@@ -56,7 +57,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
      * @param viewId
      * @return view
      */
-    private <V extends View> V getView(int viewId) {
+    public  <V extends View> V getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
             view = mConvertView.findViewById(viewId);
@@ -74,6 +75,19 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public TextView setText(int viewId, String text){
         TextView view = getView(viewId);
         view.setText(text);
+        return view;
+    }
+
+    /**
+     * 设置字体颜色
+     * @param viewId
+     * @param colorId
+     * @return
+     */
+    public TextView setTextColor(int viewId, int colorId){
+        TextView view = getView(viewId);
+        //        view.setTextColor(getContext().getResources().getColor(colorId, transparent));
+        view.setTextColor(ContextCompat.getColor(getContext(), colorId));
         return view;
     }
     /**

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.yfl.library.base.BaseViewHolder;
 
@@ -86,4 +87,21 @@ public abstract class BaseCustomAdapter<T> extends BaseAdapter{
         return convertView;
     }
 
+    /**
+     *单条数据更新
+     * @param position 要更新的位置
+     */
+    private void updateSingle(ListView listView, int position) {
+        /*第一个可见的位置**/
+        int firstVisiblePosition = listView.getFirstVisiblePosition();
+        /*最后一个可见的位置**/
+        int lastVisiblePosition = listView.getLastVisiblePosition();
+
+        /*在看见范围内才更新，不可见的滑动后自动会调用getView方法更新**/
+        if (position >= firstVisiblePosition && position <= lastVisiblePosition) {
+            /*获取指定位置view对象**/
+            View view = listView.getChildAt(position - firstVisiblePosition);
+            getView(position,view,listView);
+        }
+    }
 }
