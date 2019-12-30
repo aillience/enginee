@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.adapter.recycle;
+package com.aillience.enginee.ui.express.adapter.recycle;
 
 import android.content.Context;
 

@@ -40,10 +40,10 @@ public class LoginPresenterImpl extends BasePresenterImpl<ILoginView,UserBean> i
     }
 
     @Override
-    public void login(final RequestCallBack<UserBean> callBack, Map<String, String> map) {
+    public void login(final RequestCallBack<UserBean> callBack, Map<String, Object> map) {
         if(before()){
             new RetrofitManager(NetWorkUrl.URL_PT).getLogin(map)
-                    .compose(TransformUtils.<UserBean>defaultSchedulers())
+                    .compose(TransformUtils.defaultSchedulers())
                     .subscribe(new Observer<UserBean>() {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {

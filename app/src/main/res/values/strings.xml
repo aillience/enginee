@@ -10,6 +10,8 @@
     <string name="writeNumber">输入单号</string>
     <string name="defaultNumber">450920803566</string>
     <string name="joke">笑话</string>
+    <string name="list">列表</string>
+    <string name="add_content">这是第 %d 条数据 </string>
     <string name="startService">开启服务</string>
     <string name="stopService">结束服务</string>
     <string name="check_to_pass">接受本协议</string>

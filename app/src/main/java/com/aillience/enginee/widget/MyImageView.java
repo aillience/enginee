@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.widget;
+package com.aillience.enginee.widget;
 
 
 import android.content.Context;

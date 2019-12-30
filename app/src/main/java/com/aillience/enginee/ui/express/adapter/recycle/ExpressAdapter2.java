@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.adapter.recycle;
+package com.aillience.enginee.ui.express.adapter.recycle;
 
 import com.yfl.library.base.BaseViewHolder;
 import com.yfl.library.base.adapter.MultiItemBaseAdapter;

@@ -20,5 +20,5 @@ public interface ILoginPresenter extends IBasePresenter {
      * @param map 条件参数map集
      * 登录接口
      */
-    void login(RequestCallBack<UserBean> callBack, Map<String,String> map);
+    void login(RequestCallBack<UserBean> callBack, Map<String,Object> map);
 }

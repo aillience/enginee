@@ -1,10 +1,10 @@
-package com.aillience.enginee.ui.activity.splash;
+package com.aillience.enginee.ui.splash;
 
 import android.content.Intent;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 
-import com.aillience.enginee.ui.activity.MainActivity;
+import com.aillience.enginee.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
     @Override

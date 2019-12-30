@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.fragment;
+package com.aillience.enginee.ui.express.fragment;
 
 import android.annotation.SuppressLint;
 
@@ -10,7 +10,7 @@ import com.yfl.library.recycler.GridItemDecoration;
 import com.yfl.library.recycler.MyRecyclerView;
 import com.aillience.enginee.R;
 import com.aillience.enginee.mvp.model.entity.ExpressEntity;
-import com.aillience.enginee.ui.adapter.recycle.ExpressAdapter;
+import com.aillience.enginee.ui.express.adapter.recycle.ExpressAdapter;
 import com.aillience.enginee.ui.base.BaseFragment;
 
 import java.util.List;

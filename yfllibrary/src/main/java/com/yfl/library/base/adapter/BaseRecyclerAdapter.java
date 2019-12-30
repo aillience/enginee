@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
@@ -19,8 +21,10 @@ import android.view.ViewGroup;
 
 import com.yfl.library.R;
 import com.yfl.library.base.BaseViewHolder;
+import com.yfl.library.listeners.DiffCallBack;
 
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Happy every day.
@@ -36,6 +40,21 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     protected abstract int getLayoutId();
     protected abstract void bindViewHolder(BaseViewHolder holder, T item, int position);
     private viewClick clickEvent;
+
+    private ScheduledThreadPoolExecutor executor;
+    private final int CODE_UPDATE = 1;
+    private List<T> oldDatas;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == CODE_UPDATE) {//取出Result
+                DiffUtil.DiffResult diffResult = (DiffUtil.DiffResult) msg.obj;
+                diffResult.dispatchUpdatesTo(BaseRecyclerAdapter.this);
+            }
+        }
+    };
     public interface viewClick<T>{
         void onItemClick(View view, T item, int position);
         void onItemLongClick(View view, T item, int position);
@@ -72,6 +91,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position, List<Object> payloads) {
+        onBindViewHolder(holder, position);
+    }
+
+    @Override
     public int getItemCount() {
         return (getData()!=null)?getData().size():0;
     }
@@ -91,17 +115,28 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     //批量插入数据
     public void addAllData(List<T> items){
-        getData().addAll(items);
-        notifyDataSetChanged();
-        //这是刷新item数据的，前提是item已存在
-        //        notifyItemRangeChanged(len,len+items.size());
+        refreshAdapter(items);
     }
-    //刷新数据
-    public void refreshAdapter(){
-        new Handler().post(new Runnable() {
+
+    /**
+     * 刷新数据
+     * @param addData 新增的数据
+     */
+    private void refreshAdapter(final List<T> addData){
+        if(executor == null){
+            executor = new ScheduledThreadPoolExecutor(1);
+        }
+        executor.execute(new Runnable() {
             @Override
             public void run() {
-                notifyDataSetChanged();
+                //放在子线程中计算DiffResult
+                oldDatas = getData();
+                getData().addAll(addData);
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack<>(oldDatas, getData()), true);
+                Message message = mHandler.obtainMessage(CODE_UPDATE);
+                //obj存放DiffResult
+                message.obj = diffResult;
+                message.sendToTarget();
             }
         });
     }
@@ -127,7 +162,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
         return size * scaledDensity;
     }
 
-    //add by yfl on 20190724 将一个字符串中包含的所有另一个字符串中的字符标红
+    //add by yfl on  将一个字符串中包含的所有另一个字符串中的字符标红
     protected SpannableStringBuilder getNewSpannable(String oldString, String conString){
         SpannableStringBuilder stringBuilder = new SpannableStringBuilder(oldString);
         if(!TextUtils.isEmpty(conString)){

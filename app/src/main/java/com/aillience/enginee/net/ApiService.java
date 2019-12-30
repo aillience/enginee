@@ -14,6 +14,7 @@ import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -37,8 +38,8 @@ interface ApiService {
     @GET("api/APP1.0.aspx?")
     Observable<UserBean> Login(@Query("method") String method, @Query("userName") String userName,
                                @Query("pwd") String pwd);
-    @GET("api/APP1.0.aspx?")
-    Observable<UserBean> Login(@Header("Cache-Control") String cacheControl,@QueryMap Map<String,String> map);
+    @POST("customer/login")
+    Observable<UserBean> Login(@Header("Cache-Control") String cacheControl,@QueryMap Map<String,Object> map);
     @GET("query?")
     Observable<ExpressBean> Express(@Header("Cache-Control") String cacheControl, @QueryMap Map<String,String> map);
     @GET("xiaohua.json")

@@ -11,7 +11,7 @@ public class NetWorkUrl {
     /**
      * 基本地址url   服务器IP地址
      */
-    private static final String BASE_L = "http://192.168.1.222:8099/";
+    private static final String BASE_L = "http://bbl.mynatapp.cc/";
     /**
      * 全局url
      */

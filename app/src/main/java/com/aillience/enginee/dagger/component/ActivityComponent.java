@@ -6,8 +6,8 @@ import android.content.Context;
 import com.aillience.enginee.dagger.module.ActivityModule;
 import com.aillience.enginee.dagger.scope.ActivityScope;
 import com.aillience.enginee.dagger.scope.ContextName;
-import com.aillience.enginee.ui.activity.ExpressActivity;
-import com.aillience.enginee.ui.activity.LoginActivity;
+import com.aillience.enginee.ui.express.ExpressActivity;
+import com.aillience.enginee.ui.login.LoginActivity;
 
 import dagger.Component;
 

@@ -142,11 +142,11 @@ public class RetrofitManager {
 
     /**
      * 登录接口
-     * @param stringMap 条件
+     * @param objectMap 条件
      * @return UserBean对象
      */
-    public Observable<UserBean> getLogin(Map<String,String> stringMap){
-        return apiService.Login(getCacheControl(),stringMap);
+    public Observable<UserBean> getLogin(Map<String,Object> objectMap){
+        return apiService.Login(getCacheControl(),objectMap);
     }
 
     /**

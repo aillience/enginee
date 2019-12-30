@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.activity;
+package com.aillience.enginee.ui.login;
 
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +37,7 @@ public class LoginActivity extends BaseActivity implements ILoginView, RequestCa
     LoginPresenterImpl loginPresenter;
 
     @Override
-    protected int getContentViewLayoutID() {
+    protected int getContentViewLayoutId() {
         return R.layout.activity_login;
     }
 
@@ -87,10 +87,11 @@ public class LoginActivity extends BaseActivity implements ILoginView, RequestCa
                 finish();
                 break;
             case R.id.bt_login:
-                Map<String, String> map = new HashMap<>(3);
-                map.put("method", "Disembark");
-                map.put("userName", getUserName());
-                map.put("pwd", getPwd());
+                Map<String, Object> map = new HashMap<>(4);
+                map.put("phoneNum",getUserName());
+                map.put("pwd",getPwd());
+                map.put("msgType",0);
+                map.put("captcha","");
                 loginPresenter.login(this, map);
                 break;
             default:break;
@@ -100,16 +101,17 @@ public class LoginActivity extends BaseActivity implements ILoginView, RequestCa
     @Override
     public void beforeRequest() {
         MyLog.i("开始请求啦");
-
     }
 
     @Override
     public void success(UserBean data) {
-        MyLog.i(data.getMessage());
-        mToast.show(data.getMessage());
-        if (data.getStatus() == 1) {
-            MyLog.d(data.getData().get(0).getUserName() + "登录成功");
+        mToast.show(data.getMsg());
+        if (data.getCode() == 200) {
+            MyLog.d(data.getData().getCustomerCode() + "登录成功");
+        }else {
+            MyLog.d( "登录失败，返回code = "+data.getCode());
         }
+        MyLog.i("返回 msg = "+data.getMsg());
     }
 
     @Override

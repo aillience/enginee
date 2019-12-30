@@ -1,6 +1,8 @@
 package com.aillience.enginee.mvp.model.bean;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Happy every day.
@@ -8,32 +10,56 @@ import java.util.List;
  * explain: 基类
  */
 
- class BaseBean<T> {
-    private int Status;
-    private String Message;
-    private List<T> Data;
+ class BaseBean<T> implements Serializable {
 
-    public int getStatus() {
-        return Status;
+    @SerializedName(value = "code",alternate ={"retCode"})
+    private int code;
+    @SerializedName(value = "msg")
+    private String msg;
+    @SerializedName(value = "success")
+    private boolean success;
+    @SerializedName(value = "totalCount")
+    private int totalCount;
+    @SerializedName(value = "data",alternate ={"result"})
+    private T data;
+
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        Status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getMessage() {
-        return Message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        Message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public List<T> getData() {
-        return Data;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setData(List<T> data) {
-        Data = data;
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

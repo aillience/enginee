@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.activity;
+package com.aillience.enginee.ui.express;
 
 import android.os.Bundle;
 import android.os.Message;
@@ -18,11 +18,11 @@ import com.aillience.enginee.listener.RequestCallBack;
 import com.aillience.enginee.mvp.model.bean.ExpressBean;
 import com.aillience.enginee.mvp.presenter.impl.ExpressPresenterImpl;
 import com.aillience.enginee.mvp.view.IExpressView;
-import com.aillience.enginee.ui.adapter.frag.ExpressFragmentAdapter;
+import com.aillience.enginee.ui.express.adapter.frag.ExpressFragmentAdapter;
 import com.aillience.enginee.ui.base.BaseActivity;
-import com.aillience.enginee.ui.fragment.FragmentExpressList;
-import com.aillience.enginee.ui.fragment.FragmentExpressMultItem;
-import com.aillience.enginee.ui.fragment.FragmentExpressRecycle;
+import com.aillience.enginee.ui.express.fragment.FragmentExpressList;
+import com.aillience.enginee.ui.express.fragment.FragmentExpressMultItem;
+import com.aillience.enginee.ui.express.fragment.FragmentExpressRecycle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +66,7 @@ public class ExpressActivity extends BaseActivity implements IExpressView, Reque
     private FragmentExpressMultItem fragmentExpressMultItem;
 
     @Override
-    protected int getContentViewLayoutID() {
+    protected int getContentViewLayoutId() {
         return R.layout.activity_express;
     }
 

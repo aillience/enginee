@@ -1,9 +1,8 @@
-package com.aillience.enginee.ui.activity;
+package com.aillience.enginee.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -16,12 +15,20 @@ import com.aillience.enginee.net.NetWorkUtil;
 import com.aillience.enginee.net.RetrofitManager;
 import com.aillience.enginee.service.LivenHeartService;
 import com.aillience.enginee.ui.base.BaseActivity;
+import com.aillience.enginee.ui.express.ExpressActivity;
+import com.aillience.enginee.ui.list.PartListActivity;
+import com.aillience.enginee.ui.login.LoginActivity;
+import com.aillience.enginee.ui.main.adapter.MainAdapter;
 import com.aillience.enginee.util.BasicParameters;
 import com.aillience.enginee.util.MyLog;
 import com.aillience.enginee.util.TransformUtils;
+import com.yfl.library.base.adapter.BaseRecyclerAdapter;
+import com.yfl.library.recycler.MyRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
-import butterknife.OnClick;
+
+import butterknife.BindView;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -31,27 +38,28 @@ import io.reactivex.disposables.Disposable;
  * @author yfl
  */
 public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.rv_view)
+    MyRecyclerView recyclerView;
+
     private long time = 0;
     private Intent serviceIntent=null;
+
+    MainAdapter mainAdapter;
     @Override
-    protected int getContentViewLayoutID() {
+    protected int getContentViewLayoutId() {
         return R.layout.activity_main;
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
+        serviceIntent=new Intent(this,LivenHeartService.class);
+        initAdapter();
     }
 
     @Override
     protected void injectAction() {
 
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        serviceIntent=new Intent(this,LivenHeartService.class);
     }
 
     @Override
@@ -97,28 +105,47 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @OnClick({R.id.Btn_Search, R.id.Btn_Login, R.id.Btn_Joke,R.id.Btn_startService, R.id.Btn_stopService})
-    public void onViewClicked(View view) {
+    private void initAdapter(){
+        List<String> list = new ArrayList<>();
+        list.add((String) getResources().getText(R.string.search));
+        list.add((String) getResources().getText(R.string.login));
+        list.add((String) getResources().getText(R.string.joke));
+        list.add((String) getResources().getText(R.string.list));
+        list.add((String) getResources().getText(R.string.startService));
+        list.add((String) getResources().getText(R.string.stopService));
+        mainAdapter = new MainAdapter(this,list);
+        recyclerView.setGridLayoutManager(4,true);
+        recyclerView.setAdapter(mainAdapter);
+        mainAdapter.setViewClick(new BaseRecyclerAdapter.viewClick<String>() {
+            @Override
+            public void onItemClick(View view, String item, int position) {
+                click(item);
+            }
+
+            @Override
+            public void onItemLongClick(View view, String item, int position) {
+
+            }
+        });
+    }
+
+    private void click(String item){
         Intent intent = null;
-        switch (view.getId()) {
-            case R.id.Btn_Search:
-                intent = new Intent(this, ExpressActivity.class);
-                break;
-            case R.id.Btn_Login:
-                startActivityByName(LoginActivity.class.getCanonicalName(), false);
-                break;
-            case R.id.Btn_Joke:
-                if (fastClick()) {
-                    getJoke();
-                }
-                break;
-            case R.id.Btn_startService:
-                mHandler.sendEmptyMessage(2);
-                break;
-            case R.id.Btn_stopService:
-                mHandler.sendEmptyMessage(3);
-                break;
-            default:break;
+        if(item.contentEquals(getResources().getText(R.string.search))){
+            intent = new Intent(this, ExpressActivity.class);
+        }else if(item.contentEquals(getResources().getText(R.string.login))){
+            startActivityByName(LoginActivity.class.getCanonicalName(), false);
+        }else if(item.contentEquals(getResources().getText(R.string.joke))){
+            if (fastClick()) {
+                getJoke();
+            }
+        }else if(item.contentEquals(getResources().getText(R.string.list))){
+            //列表
+            intent = new Intent(this, PartListActivity.class);
+        }else if(item.contentEquals(getResources().getText(R.string.startService))){
+            mHandler.sendEmptyMessage(2);
+        }else if(item.contentEquals(getResources().getText(R.string.stopService))){
+            mHandler.sendEmptyMessage(3);
         }
         if (intent != null){
             startActivity(intent);
@@ -127,7 +154,7 @@ public class MainActivity extends BaseActivity {
 
     private void getJoke() {
         new RetrofitManager(NetWorkUrl.URL_JOKE).getJokeList()
-                .compose(TransformUtils.<List<JokeEntity>>defaultSchedulers())
+                .compose(TransformUtils.defaultSchedulers())
                 .subscribe(new Observer<List<JokeEntity>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {

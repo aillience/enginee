@@ -44,19 +44,27 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
     protected PublicToast mToast;
     protected Activity mActivity;
     protected Context mContext;
-    private long lastClick = 0;//最后点击计时
+    /**
+     * 最后点击计时
+     */
+    private long lastClick = 0;
     protected BaseViewHolder baseViewHolder;
     /**
      * 获取布局ID
      *
      * @return  布局id
      */
-    protected abstract int getContentViewLayoutID();
+    protected abstract int getContentViewLayoutId();
 
     /**
      * 初始化布局以及View控件
+     * @param savedInstanceState 保存状态
      */
     protected abstract void initView(Bundle savedInstanceState);
+
+    /**
+     * 初始化
+     */
     protected abstract void injectAction();
 
     @Override
@@ -79,8 +87,8 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getContentViewLayoutID() != 0) {
-            setContentView(getContentViewLayoutID());
+        if (getContentViewLayoutId() != 0) {
+            setContentView(getContentViewLayoutId());
             initView(savedInstanceState);
         }
         MyApp.getActManager().addOneActivity(this);
@@ -152,7 +160,10 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
         return baseViewHolder;
     }
 
-    //防止快速点击
+    /**
+     * 防止快速点击
+     * @return
+     */
     protected boolean fastClick() {
         if (System.currentTimeMillis() - lastClick <= 1000) {
             mToast.show("点的太快啦！");

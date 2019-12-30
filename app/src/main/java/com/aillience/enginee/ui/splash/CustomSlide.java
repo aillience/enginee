@@ -1,4 +1,4 @@
-package com.aillience.enginee.ui.activity.splash;
+package com.aillience.enginee.ui.splash;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
